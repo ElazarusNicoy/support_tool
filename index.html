@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Support Tool</title>
+        <link rel="icon" type="image/png" href="docs/assets/image/nexus-flow-logo-icon.png">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body class="home-page">
+        <aside class="sidebar" id="sidebar">
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+            <div class="sidebar-header">
+                <img src="docs/assets/image/nexus-flow-logo-icon.png" alt="Logo">
+                <span class="logo-name">Support Tool</span>
+            </div>
+            <!-- Sidebar navigation -->
+             <nav class="sidebar-nav">
+                <!--Category: HR Filing-->
+                <div class="nav-category">
+                    <button class="category-btn" onclick="toggleCategory(this)">
+                        <span class="category-icon">📁</span>
+                        <span class="category-label">HR Filing</span>
+                        <span class="arrow">▸</span>
+                    </button>
+                    <div class="submenu">
+                        <a href="#" class="submenu-item" onclick="openTab(event, 'Salary Complaint')">Salary Complaint</a>
+                        <!--add more items here-->
+                    </div>
+                </div>
+                <div class="nav-category">
+                    <button class="category-btn" onclick="toggleCategory(this)">
+                        <span class="category-icon">📁</span>
+                        <span class="category-label">Quality Assurance</span>
+                        <span class="arrow">▸</span>
+                    </button>
+                    <div class="submenu">
+                        <a href="#" class="submenu-item" onclick="openTab(event, 'PDA Ticket')">PDA Ticket</a>
+                        <a href="#" class="submenu-item" onclick="openTab(event, 'Abnormality Report')">Abnormality Report</a>
+                        <!--add more items here-->
+                    </div>
+                </div>
+                <div class="nav-category">
+                    <button class="category-btn" onclick="toggleCategory(this)">
+                        <span class="category-icon">📁</span>
+                        <span class="category-label">Supply Chain</span>
+                        <span class="arrow">▸</span>
+                    </button>
+                    <div class="submenu">
+                        <a href="#" class="submenu-item" onclick="openTab(event, 'Item Parameter Control Form')">Item Parameter Control Form</a>
+                        <a href="#" class="submenu-item" onclick="openTab(event, 'WO Endorsement Form')">WO Endorsement Form</a>
+                        <!--add more items here-->
+                    </div>
+                </div>
+                <!--add more categories here-->
+             </nav>
+        </aside>
+
+        <div class="main">
+            <!--Tab bar-->
+            <div class="tab-bar" id="tabBar"></div>
+            <main class="content" id="mainContent">
+                <div class="welcome-view" id="welcomeView">
+                    <h1>Support Tool</h1>
+                <p>Designed to eliminate knowledge silos and single-point-of-failure downtime in legacy SharePoint 2010 environments. </p>
+                </div>
+                <!--Tab panels will be added here by Javascript-->
+                
+            </main>
+        </div>
+    </body>
+    <script src="script.js"></script>
+</html>
