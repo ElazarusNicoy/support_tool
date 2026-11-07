@@ -1,0 +1,47 @@
+<section class="pda-ticket-panel">
+    <!-- Row 1: Guide card -->
+    <div class="pda-row">
+        <div class="guide-card">
+            <h2>PDA Ticket Approver Matrix Guide</h2>
+            <ol>
+                <li>Enter Requestor / Prepared By, then click <strong>Check</strong>.</li>
+                <li>Download the approver matrix template.</li>
+                <li>Upload the filled approver matrix file.</li>
+                <li>Review entries in the table and download displayed data if needed.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Row 2: Requestor/Prepared By + Check -->
+    <div class="pda-row pda-row-2">
+        <input type="text" id="requestorName" placeholder="Requestor / Prepared By">
+        <button type="button" id="checkRequestorBtn" class="btn-submit">Check</button>
+    </div>
+
+    <!-- Row 3: Action buttons -->
+    <div class="pda-row pda-row-3">
+        <button type="button" id="downloadTemplateBtn" class="btn-submit">Download Approver Matrix Template</button>
+        <button type="button" id="uploadMatrixBtn" class="btn-reset">Upload Approver Matrix</button>
+        <button type="button" id="downloadDisplayedBtn" class="btn-submit">Download Displayed Approver Matrix</button>
+        <input type="file" id="uploadMatrixInput" accept=".csv" hidden>
+    </div>
+
+    <!-- Row 4: Scrollable table -->
+    <div class="pda-row">
+        <div class="table-wrap">
+            <table id="approverMatrixTable">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Approver Name</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="4">No approver matrix uploaded yet.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

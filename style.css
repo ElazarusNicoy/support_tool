@@ -564,3 +564,84 @@ body.home-page {
 .btn-reset:hover { 
     background: #d1d5db; 
 }
+
+/* ...existing code... */
+
+.pda-ticket-panel {
+    width: 100%;
+    max-width: 1000px;
+    display: grid;
+    gap: 14px;
+}
+
+.pda-row {
+    width: 100%;
+}
+
+.guide-card {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #3b82f6;
+    border-radius: 8px;
+    padding: 14px 16px;
+}
+
+.guide-card h2 {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+    color: #1e293b;
+}
+
+.guide-card ol {
+    margin-left: 18px;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.pda-row-2 {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.pda-row-2 input {
+    flex: 1;
+    min-width: 280px;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+.pda-row-3 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.table-wrap {
+    max-height: 320px;
+    overflow: auto;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #fff;
+}
+
+#approverMatrixTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+#approverMatrixTable th,
+#approverMatrixTable td {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+#approverMatrixTable thead th {
+    position: sticky;
+    top: 0;
+    background: #f8fafc;
+    z-index: 1;
+}
