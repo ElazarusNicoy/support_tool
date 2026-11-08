@@ -75,16 +75,6 @@ function openTab(e, tabName) {
         .then(html => {
             panel.innerHTML = html;
 
-            // //wire up the form if this panel contains one
-            // const form = panel.querySelector('form');
-            // if (form) {
-            //     form.addEventListener('submit', (ev) => {
-            //         ev.preventDefault();
-            //         // send to FastAPI with fetch()
-            //         alert('Form submitted!');
-            //     });
-            // }
-
             if (tabName === 'PDA Ticket') {
             initPdaTicketPanel(panel);
         }
@@ -114,9 +104,20 @@ function openTab(e, tabName) {
             alert(`Checked: ${name}`);
         });
 
-        downloadTemplateBtn.addEventListener('click', () => {
-            const template = 'Level,Approver Name,Department,Email\n1,,, \n2,,, \n3,,, \n';
-            downloadCsv(template, 'approver-matrix-template.csv');
+        downloadTemplateBtn.addEventListener('click', async () => {
+            try {
+                const response = await fetch('docs/assets/approver_matrix_format/PDA_Ticket_Approver_Matrix_Format.xlsx');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                const blob = await response.blob();
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'PDA_Ticket_Approver_Matrix_Format.xlsx';
+                link.click();
+                URL.revokeObjectURL(link.href);
+            } catch {
+                alert('Template file not found. Please contact the administrator.');
+            }
         });
 
         uploadBtn.addEventListener('click', () => uploadInput.click());
@@ -125,17 +126,25 @@ function openTab(e, tabName) {
             const file = uploadInput.files?.[0];
             if (!file) return;
 
-            const text = await file.text();
-            const rows = text.split(/\r?\n/).filter(Boolean).map(line => line.split(','));
+            let rows;
+            if (file.name.toLowerCase().endsWith('.xlsx') || file.name.toLowerCase().endsWith('.xls')) {
+                const data = await file.arrayBuffer();
+                const workbook = XLSX.read(data);
+                const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+            } else {
+                const text = await file.text();
+                rows = text.split(/\r?\n/).filter(Boolean).map(line => line.split(','));
+            }
 
             tableBody.innerHTML = '';
             rows.slice(1).forEach(cols => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${(cols[0] || '').trim()}</td>
-                    <td>${(cols[1] || '').trim()}</td>
-                    <td>${(cols[2] || '').trim()}</td>
-                    <td>${(cols[3] || '').trim()}</td>
+                    <td>${String(cols[0] ?? '').trim()}</td>
+                    <td>${String(cols[1] ?? '').trim()}</td>
+                    <td>${String(cols[2] ?? '').trim()}</td>
+                    <td>${String(cols[3] ?? '').trim()}</td>
                 `;
                 tableBody.appendChild(tr);
             });
@@ -146,12 +155,22 @@ function openTab(e, tabName) {
         });
 
         downloadDisplayedBtn.addEventListener('click', () => {
-            const lines = ['Level,Approver Name,Department,Email'];
+            const rows = [['Level', 'Approver Name', 'Department', 'Email']];
+
             panel.querySelectorAll('#approverMatrixTable tbody tr').forEach(tr => {
                 const cells = [...tr.querySelectorAll('td')].map(td => td.textContent.trim());
-                if (cells.length === 4) lines.push(cells.join(','));
+                if (cells.length === 4) rows.push(cells);
             });
-            downloadCsv(lines.join('\n'), 'displayed-approver-matrix.csv');
+
+            if (rows.length === 1) {
+                alert('No data to download.');
+                return;
+            }
+
+            const worksheet = XLSX.utils.aoa_to_sheet(rows);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Approver Matrix');
+            XLSX.writeFile(workbook, 'displayed-approver-matrix.xlsx'); // saves as .xlsx by default
         });
     }
 
